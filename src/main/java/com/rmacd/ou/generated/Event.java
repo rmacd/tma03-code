@@ -1,12 +1,19 @@
 package com.rmacd.ou.generated;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+@Entity
+@Table(name = "EVENTS")
 public class Event {
 
-    String title;
+    @Id
     private String id;
+    private String title;
     private LocalDateTime start;
     private LocalDateTime end;
     private EventType type;
@@ -90,5 +97,18 @@ public class Event {
     public Event setTitle(String title) {
         this.title = title;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return Objects.equals(id, event.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

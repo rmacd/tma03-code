@@ -1,27 +1,31 @@
 package com.rmacd.ou.generated;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@Entity // will default to creating a table 'registrations'
+@Entity
+@Table(name = "REGISTRATIONS")
 public class Registration {
 
     @Id
     private String id;
     private LocalDateTime registered;
-    private String eventId;
-    private String attendeeId;
+    @OneToOne
+    @JoinColumn(name = "event_id", referencedColumnName = "id")
+    private Event event;
+    @OneToOne
+    @JoinColumn(name = "attendee_id", referencedColumnName = "email")
+    private Attendee attendee;
 
     // no-args constructor required for JPA
     protected Registration() {
     }
 
     public Registration(Attendee attendee, Event event) {
-        this.eventId = event.getId();
-        this.attendeeId = attendee.getEmail();
-        this.id = String.format("%s_%s", attendeeId, eventId);
+        this.id = String.format("%s_%s", attendee.getEmail(), event.getId());
+        this.attendee = attendee;
+        this.event = event;
         this.registered = LocalDateTime.now();
     }
 
@@ -31,26 +35,5 @@ public class Registration {
 
     public LocalDateTime getRegistered() {
         return registered;
-    }
-
-    public String getEventId() {
-        return eventId;
-    }
-
-    public String getAttendeeId() {
-        return attendeeId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Registration that = (Registration) o;
-        return id.equals(that.id) && eventId.equals(that.eventId) && attendeeId.equals(that.attendeeId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, eventId, attendeeId);
     }
 }

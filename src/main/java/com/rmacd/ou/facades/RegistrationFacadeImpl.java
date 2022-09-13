@@ -4,7 +4,9 @@ import com.rmacd.ou.generated.Attendee;
 import com.rmacd.ou.generated.Event;
 import com.rmacd.ou.generated.Registration;
 import com.rmacd.ou.repos.RegistrationRepo;
+import org.springframework.stereotype.Component;
 
+@Component // registers an instance of this class as a Bean
 public class RegistrationFacadeImpl implements RegistrationFacade {
 
     final RegistrationRepo registrationRepo;

@@ -1,9 +1,22 @@
 package com.rmacd.ou.generated;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Objects;
+
+@Entity
+@Table(name = "ATTENDEES")
 public class Attendee extends Person {
 
+    @Id
+    // is defined in our abstract class
+    // but annotation must be in same class
+    // as entity, therefore we include here
+    // as well
+    private String email;
     private String biography;
-    private Photo photo;
+    private byte[] photo;
 
     public String getBiography() {
         return this.biography;
@@ -16,14 +29,16 @@ public class Attendee extends Person {
         this.biography = biography;
     }
 
-    public Photo getPhoto() {
-        return this.photo;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Attendee attendee = (Attendee) o;
+        return Objects.equals(email, attendee.email);
     }
 
-    /**
-     * @param photo
-     */
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 }
