@@ -1,7 +1,7 @@
 package com.rmacd.ou.repos;
 
-import models.generated.Registration;
-import org.springframework.data.repository.Repository;
+import com.rmacd.ou.generated.Registration;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RegistrationRepo extends Repository<Registration, String> {
+public interface RegistrationRepo extends JpaRepository<Registration, String> {
 }

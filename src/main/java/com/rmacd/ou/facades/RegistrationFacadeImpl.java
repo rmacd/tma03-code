@@ -1,8 +1,9 @@
 package com.rmacd.ou.facades;
 
+import com.rmacd.ou.generated.Attendee;
+import com.rmacd.ou.generated.Event;
+import com.rmacd.ou.generated.Registration;
 import com.rmacd.ou.repos.RegistrationRepo;
-import models.generated.Attendee;
-import models.generated.Event;
 
 public class RegistrationFacadeImpl implements RegistrationFacade {
 
@@ -15,6 +16,11 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
 
     @Override
     public void createEventRegistration(Attendee attendee, Event event) {
-
+        Registration registration = new Registration(attendee, event);
+        if (registrationRepo.existsById(registration.getId())) {
+            throw new IllegalArgumentException("Attendee already registered");
+        }
+        // persist the object
+        registrationRepo.save(registration);
     }
 }
